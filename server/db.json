@@ -1,0 +1,28 @@
+{
+  "contacts": [
+    {
+      "id": "1fa6",
+      "name": "asd",
+      "photo": "https://cdn.icon-icons.com/icons2/317/PNG/512/sign-question-icon_34359.png",
+      "mobile": "das",
+      "email": "ddsad@mail.com",
+      "company": "das",
+      "title": "dsa",
+      "group": "2"
+    }
+  ],
+  "groups": [
+    {
+      "id": "1",
+      "name": "Student"
+    },
+    {
+      "id": "2",
+      "name": "Teacher"
+    },
+    {
+      "id": "3",
+      "name": "Other"
+    }
+  ]
+}
