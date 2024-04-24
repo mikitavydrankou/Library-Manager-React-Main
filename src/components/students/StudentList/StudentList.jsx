@@ -19,7 +19,7 @@ let StudentList = () => {
     const fetchData = async () => {
       try {
         setState({ ...state, loading: true });
-        let response = await StudentService.getAllStudents();
+        let response = await StudentService.getStudents();
         console.log(response.data);
 
         setState({
@@ -45,7 +45,7 @@ let StudentList = () => {
       let response = await StudentService.deleteStudent(studentId);
       if (response) {
         setState({ ...state, loading: true });
-        let response = await StudentService.getAllStudents();
+        let response = await StudentService.getStudents();
         setState({
           ...state,
           loading: false,
@@ -127,13 +127,13 @@ let StudentList = () => {
                               <div className='card-body'>
                                 <div className='row align-items-center d-flex justify-content-around'>
                                   {' '}
-                                  <div className='col-md-4'>
+                                  {/* <div className='col-md-4'>
                                     <img
                                       src={student.photo}
                                       className='student-img'
                                       alt=''
                                     />
-                                  </div>
+                                  </div> */}
                                   <div className='col-md-7'>
                                     <ul className='list-group'>
                                       <li className='list-group-item list-group-item-action'>
@@ -143,9 +143,9 @@ let StudentList = () => {
                                         </span>
                                       </li>
                                       <li className='list-group-item list-group-item-action'>
-                                        Mobile number:{' '}
+                                        Surname:{' '}
                                         <span className='fw-bold'>
-                                          {student.mobile}
+                                          {student.surname}
                                         </span>
                                       </li>
                                       <li className='list-group-item list-group-item-action'>

@@ -3,18 +3,12 @@ import axios from 'axios';
 export default class StudentService {
   static serverURL = `http://localhost:8080`;
 
-  static getAllStudents() {
+  static getStudents() {
     let dataURL = `${this.serverURL}/api/students/`;
     return axios.get(dataURL);
   }
-
-  static getStudent(studentId) {
-    let dataURL = `${this.serverURL}/api/students/${studentId}`;
-    return axios.get(dataURL);
-  }
-
-  static createStudent(student) {
-    let dataURL = `${this.serverURL}/api/stundents`;
+  static registerNewStudent(student) {
+    let dataURL = `${this.serverURL}/api/students/`;
     return axios.post(dataURL, student);
   }
 
@@ -24,7 +18,18 @@ export default class StudentService {
   }
 
   static deleteStudent(studentId) {
-    let dataURL = `${this.serverURL}/api/contacts/${studentId}`;
+    let dataURL = `${this.serverURL}/api/students/${studentId}`;
+    return axios.delete(dataURL);
+  }
+
+  //Добавление книжки студенту, допилить
+  static addBookToStudent(studentId, bookId) {
+    let dataURL = `${this.serverURL}/api/students/${studentId}/books/${bookId}`;
+    return axios.post(dataURL);
+  }
+
+  static deleteBookFromStudent(studentId, bookId) {
+    let dataURL = `${this.serverURL}/api/students/${studentId}/books/${bookId}`;
     return axios.delete(dataURL);
   }
 }

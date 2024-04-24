@@ -8,9 +8,10 @@ let AddStudent = () => {
   let [state, setState] = useState({
     loading: false,
     student: {
-      email: '',
       name: '',
       surname: '',
+      email: '',
+      studentNumber: '',
     },
     errorMessage: '',
   });
@@ -29,8 +30,9 @@ let AddStudent = () => {
 
   let submitForm = async (event) => {
     event.preventDefault();
+
     try {
-      let response = await StudentService.createStudent(state.student);
+      let response = await StudentService.registerNewStudent(state.student);
       if (response) {
         navigate('/students/list', { replace: true });
       }
@@ -47,27 +49,15 @@ let AddStudent = () => {
           <div className='container'>
             <div className='row'>
               <div className='col'>
-                <p className='h4 text-success fw-bold'>Create Student</p>
+                <p className='h4 text-success fw-bold'>Register Student</p>
               </div>
               <p className='fst-italic'>
-                Here you can create a new user and add it to the list.
+                Here you can register a new student and add it to the list.
               </p>
             </div>
             <div className='row'>
               <div className='col-md-4'>
                 <form onSubmit={submitForm}>
-                  <div className='mb-2'>
-                    <input
-                      required={true}
-                      name='email'
-                      value={student.email}
-                      onChange={updateInput}
-                      type='text'
-                      className='form-control'
-                      placeholder='Email'
-                    />
-                  </div>
-
                   <div className='mb-2'>
                     <input
                       required={true}
@@ -89,6 +79,32 @@ let AddStudent = () => {
                       type='text'
                       className='form-control'
                       placeholder='Surname'
+                    />
+                  </div>
+
+                  <div className='mb-2'>
+                    <input
+                      required={true}
+                      name='email'
+                      value={student.email}
+                      onChange={updateInput}
+                      type='email'
+                      className='form-control'
+                      placeholder='Email'
+                    />
+                  </div>
+
+                  <div className='mb-2'>
+                    <input
+                      required={true}
+                      name='studentNumber'
+                      value={student.studentNumber}
+                      onChange={updateInput}
+                      type='text'
+                      className='form-control'
+                      placeholder='Student number'
+                      inputMode='numeric' // Указывает, что это поле предназначено для ввода чисел
+                      pattern='\d*' // Указывает, что поле должно содержать только цифры
                     />
                   </div>
 
