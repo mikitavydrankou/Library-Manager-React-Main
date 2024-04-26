@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import StudentService from '../../../services/StudentService';
+import BookService from '../../../services/BookService';
 import Spinner from '../../Spinner/Spinner';
 
-let EditStudent = () => {
-  let { studentId } = useParams();
+let EditBook = () => {
+  let { bookId } = useParams();
   let navigate = useNavigate();
 
   let [state, setState] = useState({
     loading: false,
-    student: {
-      name: '',
-      surname: '',
-      email: '',
-      studentNumber: '',
+    book: {
+      title: '',
+      author: '',
     },
     errorMessage: '',
   });
@@ -22,11 +20,11 @@ let EditStudent = () => {
     const fetchData = async () => {
       try {
         setState({ ...state, loading: true });
-        let response = await StudentService.getStudent(studentId);
+        let response = await BookService.getBook(bookId);
         setState({
           ...state,
           loading: false,
-          student: response.data,
+          book: response.data,
         });
       } catch (error) {
         setState({
@@ -38,13 +36,13 @@ let EditStudent = () => {
     };
 
     fetchData();
-  }, [studentId]);
+  }, [bookId]);
 
   let updateInput = (event) => {
     setState({
       ...state,
-      student: {
-        ...state.student,
+      book: {
+        ...state.book,
         [event.target.name]: event.target.value,
       },
     });
@@ -53,20 +51,17 @@ let EditStudent = () => {
   let submitForm = async (event) => {
     event.preventDefault();
     try {
-      let response = await StudentService.updateStudent(
-        state.student,
-        studentId,
-      );
+      let response = await BookService.updateBook(state.book, bookId);
       if (response) {
-        navigate('/students/list', { replace: true });
+        navigate('/books/list', { replace: true });
       }
     } catch (error) {
       setState({ ...state, errorMessage: error.message });
-      navigate(`/students/edit/${studentId}`, { replace: false });
+      navigate(`/books/edit/${bookId}`, { replace: false });
     }
   };
 
-  let { loading, student, errorMessage } = state;
+  let { loading, book, errorMessage } = state;
 
   return (
     <>
@@ -80,11 +75,11 @@ let EditStudent = () => {
                 <div className='row'>
                   <div className='col'>
                     <p className='h4 text-primary fw-bold'>
-                      Edit Student with id {studentId}
+                      Edit Book with id {bookId}
                     </p>
                   </div>
                   <p className='fst-italic'>
-                    Here you can edit user information.
+                    Here you can edit book information.
                   </p>
                 </div>
                 <div className='row align-items-center'>
@@ -92,50 +87,24 @@ let EditStudent = () => {
                     <form onSubmit={submitForm}>
                       <div className='mb-2'>
                         <input
-                          name='name'
+                          name='title'
                           required={false}
-                          value={student.name}
+                          value={book.title}
                           onChange={updateInput}
                           type='text'
                           className='form-control'
-                          placeholder={`Name: ${student.name}`}
+                          placeholder={`Name: ${book.title}`}
                         />
                       </div>
                       <div className='mb-2'>
                         <input
-                          name='surname'
+                          name='author'
                           required={false}
-                          value={student.surname}
+                          value={book.author}
                           onChange={updateInput}
                           type='text'
                           className='form-control'
-                          placeholder='Surname'
-                        />
-                      </div>
-
-                      <div className='mb-2'>
-                        <input
-                          name='email'
-                          required={false}
-                          value={student.email}
-                          onChange={updateInput}
-                          type='email'
-                          className='form-control'
-                          placeholder='Email'
-                        />
-                      </div>
-
-                      <div className='mb-2'>
-                        <input
-                          required={false}
-                          name='studentNumber'
-                          value={student.studentNumber}
-                          onChange={updateInput}
-                          type='text'
-                          className='form-control'
-                          placeholder='Student number'
-                          inputMode='numeric' // Указывает, что это поле предназначено для ввода чисел
-                          pattern='\d*' // Указывает, что поле должно содержать только цифры
+                          placeholder={`Author: ${book.author}`}
                         />
                       </div>
 
@@ -145,10 +114,7 @@ let EditStudent = () => {
                           className='btn btn-primary'
                           value='Update'
                         />
-                        <Link
-                          to={'/students/list'}
-                          className='btn btn-dark ms-2'
-                        >
+                        <Link to={'/books/list'} className='btn btn-dark ms-2'>
                           Cancel
                         </Link>
                       </div>
@@ -164,4 +130,4 @@ let EditStudent = () => {
   );
 };
 
-export default EditStudent;
+export default EditBook;

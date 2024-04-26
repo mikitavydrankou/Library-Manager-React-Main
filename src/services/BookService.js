@@ -7,6 +7,12 @@ export default class StudentService {
     let dataURL = `${this.serverURL}/api/books/`;
     return axios.get(dataURL);
   }
+
+  static getBook(bookId) {
+    let dataURL = `${this.serverURL}/api/books/${bookId}`;
+    return axios.get(dataURL);
+  }
+
   static registerNewBook(student) {
     let dataURL = `${this.serverURL}/api/books/`;
     return axios.post(dataURL, student);
