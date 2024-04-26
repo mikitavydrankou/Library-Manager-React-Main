@@ -20,7 +20,6 @@ let BookList = () => {
       try {
         setState({ ...state, loading: true });
         let response = await BookService.getBooks();
-        console.log(response.data);
 
         setState({
           ...state,
@@ -89,7 +88,7 @@ let BookList = () => {
                     </Link>
                     <Link to={'/students/list'} className='btn ms-3 bg-warning'>
                       <i className='fa fa-eye me-2' />
-                      Books
+                      Students
                     </Link>
                   </p>
                   <p className='fst-italic'>
@@ -105,7 +104,7 @@ let BookList = () => {
                       onChange={searchBooks}
                       type='text'
                       className='form-control'
-                      placeholder='Search Names'
+                      placeholder='Search books by title'
                       style={{ width: '200px' }}
                     />
                   </div>

@@ -74,90 +74,94 @@ let EditStudent = () => {
         {loading ? (
           <Spinner />
         ) : (
-          <React.Fragment>
-            <section className='add-contact p-3'>
-              <div className='container'>
-                <div className='row'>
-                  <div className='col'>
-                    <p className='h4 text-primary fw-bold'>
-                      Edit Student with id {studentId}
-                    </p>
+          <div className='container'>
+            <div className='row'>
+              <div className='col-md-6'>
+                <section className='add-contact p-3'>
+                  <div className='container'>
+                    <div className='row'>
+                      <div className='col'>
+                        <p className='h4 text-primary fw-bold'>
+                          Edit Student with id {studentId}
+                        </p>
+                      </div>
+                      <p className='fst-italic'>
+                        Here you can edit user information.
+                      </p>
+                    </div>
+                    <div className='row align-items-center'>
+                      <div className='col-md-8'>
+                        <form onSubmit={submitForm}>
+                          <div className='mb-2'>
+                            <input
+                              name='name'
+                              required={false}
+                              value={student.name}
+                              onChange={updateInput}
+                              type='text'
+                              className='form-control'
+                              placeholder={`Name: ${student.name}`}
+                            />
+                          </div>
+                          <div className='mb-2'>
+                            <input
+                              name='surname'
+                              required={false}
+                              value={student.surname}
+                              onChange={updateInput}
+                              type='text'
+                              className='form-control'
+                              placeholder='Surname'
+                            />
+                          </div>
+
+                          <div className='mb-2'>
+                            <input
+                              name='email'
+                              required={false}
+                              value={student.email}
+                              onChange={updateInput}
+                              type='email'
+                              className='form-control'
+                              placeholder='Email'
+                            />
+                          </div>
+
+                          <div className='mb-2'>
+                            <input
+                              required={false}
+                              name='studentNumber'
+                              value={student.studentNumber}
+                              onChange={updateInput}
+                              type='text'
+                              className='form-control'
+                              placeholder='Student number'
+                              inputMode='numeric' // Указывает, что это поле предназначено для ввода чисел
+                              pattern='\d*' // Указывает, что поле должно содержать только цифры
+                            />
+                          </div>
+
+                          <div className='mb-2'>
+                            <input
+                              type='submit'
+                              className='btn btn-primary'
+                              value='Update'
+                            />
+                            <Link
+                              to={'/students/list'}
+                              className='btn btn-dark ms-2'
+                            >
+                              Cancel
+                            </Link>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
                   </div>
-                  <p className='fst-italic'>
-                    Here you can edit user information.
-                  </p>
-                </div>
-                <div className='row align-items-center'>
-                  <div className='col-md-4'>
-                    <form onSubmit={submitForm}>
-                      <div className='mb-2'>
-                        <input
-                          name='name'
-                          required={false}
-                          value={student.name}
-                          onChange={updateInput}
-                          type='text'
-                          className='form-control'
-                          placeholder={`Name: ${student.name}`}
-                        />
-                      </div>
-                      <div className='mb-2'>
-                        <input
-                          name='surname'
-                          required={false}
-                          value={student.surname}
-                          onChange={updateInput}
-                          type='text'
-                          className='form-control'
-                          placeholder='Surname'
-                        />
-                      </div>
-
-                      <div className='mb-2'>
-                        <input
-                          name='email'
-                          required={false}
-                          value={student.email}
-                          onChange={updateInput}
-                          type='email'
-                          className='form-control'
-                          placeholder='Email'
-                        />
-                      </div>
-
-                      <div className='mb-2'>
-                        <input
-                          required={false}
-                          name='studentNumber'
-                          value={student.studentNumber}
-                          onChange={updateInput}
-                          type='text'
-                          className='form-control'
-                          placeholder='Student number'
-                          inputMode='numeric' // Указывает, что это поле предназначено для ввода чисел
-                          pattern='\d*' // Указывает, что поле должно содержать только цифры
-                        />
-                      </div>
-
-                      <div className='mb-2'>
-                        <input
-                          type='submit'
-                          className='btn btn-primary'
-                          value='Update'
-                        />
-                        <Link
-                          to={'/students/list'}
-                          className='btn btn-dark ms-2'
-                        >
-                          Cancel
-                        </Link>
-                      </div>
-                    </form>
-                  </div>
-                </div>
+                </section>
               </div>
-            </section>
-          </React.Fragment>
+            </div>
+          </div>
         )}
       </React.Fragment>
     </>
