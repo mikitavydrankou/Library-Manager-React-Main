@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import StudentService from '../../../services/StudentService';
+import BookService from '../../../services/BookService';
 import Spinner from '../../Spinner/Spinner';
 
-let StudentList = () => {
+let AddBookToStudent = () => {
   let [query, setQuery] = useState({
     text: '',
   });
 
   let [state, setState] = useState({
     loading: false,
-    students: [],
-    filteredStudents: [],
+    books: [],
     errorMessage: '',
   });
 
@@ -19,14 +18,12 @@ let StudentList = () => {
     const fetchData = async () => {
       try {
         setState({ ...state, loading: true });
-        let response = await StudentService.getStudents();
-        console.log(response.data);
+        let response = await BookService.getBooks();
 
         setState({
           ...state,
           loading: false,
-          students: response.data,
-          filteredStudents: response.data,
+          books: response.data,
         });
       } catch (error) {
         setState({ ...state, loading: false, errorMessage: error.message });
@@ -36,21 +33,21 @@ let StudentList = () => {
     fetchData();
   }, []);
 
-  let { loading, filteredStudents } = state;
+  let { loading, filteredBooks } = state;
 
   // Delete student
 
-  let clickDelete = async (studentId) => {
+  let clickDelete = async (bookId) => {
     try {
-      let response = await StudentService.deleteStudent(studentId);
+      let response = await BookService.deleteBook(bookId);
       if (response) {
         setState({ ...state, loading: true });
-        let response = await StudentService.getStudents();
+        let response = await BookService.getBooks();
         setState({
           ...state,
           loading: false,
-          students: response.data,
-          filteredStudents: response.data,
+          books: response.data,
+          filteredBooks: response.data,
         });
       }
     } catch (error) {
@@ -60,16 +57,16 @@ let StudentList = () => {
 
   // search students
 
-  let searchStudents = (event) => {
+  let searchBooks = (event) => {
     setQuery({ ...query, text: event.target.value });
-    let theStudents = state.students.filter((student) => {
-      return student.name
+    let theBooks = state.books.filter((book) => {
+      return book.title
         .toLowerCase()
         .includes(event.target.value.toLowerCase());
     });
     setState({
       ...state,
-      filteredStudents: theStudents,
+      filteredBooks: theBooks,
     });
   };
 
@@ -82,18 +79,18 @@ let StudentList = () => {
               <div className='row'>
                 <div className='col'>
                   <p className='h3 fw-bold'>
-                    Student Manager
-                    <Link to={'/students/add'} className='btn ms-3 bg-warning'>
+                    Book Manager
+                    <Link to={'/books/add'} className='btn ms-3 bg-warning'>
                       <i className='fa fa-plus-circle me-2' />
                       New
                     </Link>
-                    <Link to={'/books/list'} className='btn ms-3 bg-warning'>
+                    <Link to={'/students/list'} className='btn ms-3 bg-warning'>
                       <i className='fa fa-eye me-2' />
-                      Books
+                      Students
                     </Link>
                   </p>
                   <p className='fst-italic'>
-                    Click &quot;New&quot; to add student
+                    Click &quot;New&quot; to add book
                   </p>
                 </div>
 
@@ -102,10 +99,10 @@ let StudentList = () => {
                     <input
                       name='text'
                       value={query.text}
-                      onChange={searchStudents}
+                      onChange={searchBooks}
                       type='text'
                       className='form-control'
-                      placeholder='Search Names'
+                      placeholder='Search books by title'
                       style={{ width: '200px' }}
                     />
                   </div>
@@ -122,11 +119,11 @@ let StudentList = () => {
             <section className='student-list'>
               <div className='container'>
                 <div className='row'>
-                  {filteredStudents.length > 0 &&
-                    filteredStudents.map((student) => {
+                  {filteredBooks.length > 0 &&
+                    filteredBooks.map((book) => {
                       return (
                         <>
-                          <div className='col-md-6' key={student.id}>
+                          <div className='col-md-6' key={book.id}>
                             <div className='card my-2'>
                               <div className='card-body'>
                                 <div className='row align-items-center d-flex justify-content-around'>
@@ -141,28 +138,22 @@ let StudentList = () => {
                                   <div className='col-md-7'>
                                     <ul className='list-group'>
                                       <li className='list-group-item list-group-item-action'>
-                                        Name:{' '}
+                                        Title:{' '}
                                         <span className='fw-bold'>
-                                          {student.name}
+                                          {book.title}
                                         </span>
                                       </li>
                                       <li className='list-group-item list-group-item-action'>
-                                        Surname:{' '}
+                                        Author:{' '}
                                         <span className='fw-bold'>
-                                          {student.surname}
-                                        </span>
-                                      </li>
-                                      <li className='list-group-item list-group-item-action'>
-                                        e-mail:{' '}
-                                        <span className='fw-bold'>
-                                          {student.email}
+                                          {book.author}
                                         </span>
                                       </li>
                                     </ul>
                                   </div>
                                   <div className='col-md-1 d-flex flex-column align-items-center'>
                                     <Link
-                                      to={`/students/view/${student.id}`}
+                                      to={`/books/view/${book.id}`}
                                       className='btn btn-warning my-1 mx-1'
                                       style={{ width: '40px', height: '40px' }}
                                     >
@@ -170,7 +161,7 @@ let StudentList = () => {
                                     </Link>
 
                                     <Link
-                                      to={`/students/edit/${student.id}`}
+                                      to={`/books/edit/${book.id}`}
                                       className='btn btn-primary my-1 mx-1'
                                       style={{ width: '40px', height: '40px' }}
                                     >
@@ -180,17 +171,10 @@ let StudentList = () => {
                                     <button
                                       className='btn btn-danger my-1 mx-1'
                                       style={{ width: '40px', height: '40px' }}
-                                      onClick={() => clickDelete(student.id)}
+                                      onClick={() => clickDelete(book.id)}
                                     >
                                       <i className='fa fa-trash' />
                                     </button>
-                                    {/* 
-                                    <Link
-                                      className='btn btn-success my-1 mx-1'
-                                      style={{ width: '40px', height: '40px' }}
-                                    >
-                                      <i className='fa fa-plus' />
-                                    </Link> */}
                                   </div>
                                 </div>
                               </div>
@@ -209,4 +193,4 @@ let StudentList = () => {
   );
 };
 
-export default StudentList;
+export default AddBookToStudent;

@@ -18,13 +18,13 @@ export default class StudentService {
     return axios.post(dataURL, student);
   }
 
-  static updateBook(student, studentId) {
-    let dataURL = `${this.serverURL}/api/books/${studentId}`;
+  static updateBook(bookId) {
+    let dataURL = `${this.serverURL}/api/books/${bookId}`;
     return axios.put(dataURL, student);
   }
 
-  static deleteBook(studentId) {
-    let dataURL = `${this.serverURL}/api/books/${studentId}`;
+  static deleteBook(bookId) {
+    let dataURL = `${this.serverURL}/api/books/${bookId}`;
     return axios.delete(dataURL);
   }
 }
